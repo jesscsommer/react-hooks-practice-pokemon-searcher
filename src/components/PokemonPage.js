@@ -15,6 +15,12 @@ const PokemonPage = () => {
     .then(data => setPokemons(data))
   }, [])
 
+  //! Add new pokemons 
+
+  const addPokemon = (newPokemon) => {
+    setPokemons(pokemons => [newPokemon, ...pokemons])
+  }
+
   //! Save search value to its own state
 
   const [searchTerm, setSearchTerm] = useState('')
@@ -31,7 +37,7 @@ const PokemonPage = () => {
     <Container>
       <h1>Pokemon Searcher</h1>
       <br />
-      <PokemonForm />
+      <PokemonForm addPokemon={addPokemon} />
       <br />
       <Search handleSearch={handleSearch} searchTerm={searchTerm} />
       <br />
