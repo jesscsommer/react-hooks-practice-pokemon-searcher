@@ -5,6 +5,8 @@ import Search from "./Search";
 import { Container } from "semantic-ui-react";
 
 const PokemonPage = () => {
+
+  //! Get pokemons and set initial state 
   const [pokemons, setPokemons] = useState([])
 
   useEffect(() => {
@@ -13,15 +15,27 @@ const PokemonPage = () => {
     .then(data => setPokemons(data))
   }, [])
 
+  //! Save search value to its own state
+
+  const [searchTerm, setSearchTerm] = useState('')
+
+  const handleSearch = (newSearchTerm) => {
+    setSearchTerm(newSearchTerm)
+  }
+
+  //! Filter pokemon state by search term 
+
+  const filteredPokemons = pokemons.filter(pokemon => pokemon.name.toLowerCase().includes(searchTerm.toLowerCase()))
+
   return (
     <Container>
       <h1>Pokemon Searcher</h1>
       <br />
       <PokemonForm />
       <br />
-      <Search />
+      <Search handleSearch={handleSearch} searchTerm={searchTerm} />
       <br />
-      <PokemonCollection pokemons={pokemons} />
+      <PokemonCollection pokemons={filteredPokemons} />
     </Container>
   );
 }
