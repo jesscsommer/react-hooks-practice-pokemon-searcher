@@ -33,8 +33,15 @@ const PokemonForm = ({ addPokemon }) => {
         onSubmit={(e) => {
           console.log("submitting form...");
           e.preventDefault()
-          //! FETCH GOES HERE 
-          addPokemon(formData)
+          fetch('http://localhost:3001/pokemon', {
+            method: 'POST', 
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+          })
+          .then(res => res.json())
+          .then(newPokemon => addPokemon(newPokemon))
           setFormData(initialState)
         }}
       >
